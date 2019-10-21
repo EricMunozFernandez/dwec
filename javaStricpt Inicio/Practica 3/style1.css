@@ -1,0 +1,10 @@
+*{
+  box-sizing: border-box;
+}
+form{
+  padding-left: 10px;
+  display: inline-block; 
+}
+button{
+  width: 49%;
+}

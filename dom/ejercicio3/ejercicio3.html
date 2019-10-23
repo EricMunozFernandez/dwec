@@ -2,15 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>ejercicio3</title>
 </head>
 <body>
 <form>
-    <button onclick="añadir()">Añadir</button>
-    <button>Borrar</button>
-    <input type="radio" name="posicion" value="principio">
-    <input type="radio" name="posicion" value="final">
-    <input type="radio" name="posicion" value="otro" onclick="desplegable()">
+
+</form>
+<form><input type="button" value="Añadir" onclick="añadir()">
+    <input type="button" value="Borrar" onclick="borrar()">
+    <label><input type="radio" name="posicion" id="principio" value="principio" >Principio</label>
+    <label><input type="radio" name="posicion" id="final" value="final" >Final</label>
+    <label><input type="radio" name="posicion" id="otro" value="otro" onclick="desplegable();this.onclick=null;">Otro</label>
 </form>
 <script src="ejercicio3.js"></script>
 </body>

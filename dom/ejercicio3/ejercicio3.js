@@ -39,7 +39,8 @@ function añadir(){
 function borrar() {
     if(document.getElementById('principio').checked){
         let posicion=form.children[0];
-        eliminar(posicion);
+        form.removeChild(posicion);
+
     }
     if(document.getElementById('final').checked){
         let posicion=form.children.length-1;

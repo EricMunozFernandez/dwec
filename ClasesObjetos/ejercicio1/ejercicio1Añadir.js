@@ -26,17 +26,45 @@ function crear(posicion) {
 }
 
 function contactoNuevo() {
-    let body = document.documentElement.lastChild;
-    let main = body.children[0];
     let arrayCampos = [];
-    for (let x = 0; x < main.children.length; x++) {
-        let input = document.getElementsByTagName('input')[x].value;
-        if (input != 'AñadirCampo' || input != 'AñadirContacto') {
-            arrayCampos.push(input);
+    for (let x = 0; x < document.getElementsByTagName("input").length; x++) {
+        let input = document.getElementsByTagName('input')[x].type;
+        if (input != 'button') {
+            arrayCampos.push(document.getElementsByTagName('input')[x].value);
         }
     }
-    let otros=arrayCampos.splice(0,2)
-    let contactoJSON={'nombre':arrayCampos[0],
-        'organizacion':arrayCampos[1],
-        'otros':otros};
+    let otros = arrayCampos.splice(2, 2)
+    let contacto = {
+        'nombre': arrayCampos[0],
+        'organizacion': arrayCampos[1],
+        'otros': otros
+    };
+    let contactoJSON = JSON.stringify(contacto);
+    enviarJSON(contactoJSON);
+}
+
+function enviarJSON(contactoJSON) {
+    $.ajax({
+        url: '#',
+        type: 'post',
+        dataType: 'json',
+        contentType: 'application/json',
+        success: alert('envio correcto'),
+        data: contactoJSON
+    });
+
+    añadirContacto();
+
+}
+
+function añadirContacto() {
+    let contacto = JSON.parse(contactoJSON);
+
+    let arrayContactos = localStorage.getItem('arrayContactos');
+
+    let contactos = JSON.parse(arrayContactos);
+
+    contactos.push(contacto);
+
+    localStorage.setItem('arrayContactos', JSON.stringify(contactos));
 }

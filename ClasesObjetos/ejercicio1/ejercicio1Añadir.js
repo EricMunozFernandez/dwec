@@ -53,11 +53,11 @@ function enviarJSON(contactoJSON) {
         data: contactoJSON
     });
 
-    añadirContacto();
+    añadirContacto(contactoJSON);
 
 }
 
-function añadirContacto() {
+function añadirContacto(contactoJSON) {
     let contacto = JSON.parse(contactoJSON);
 
     let arrayContactos = localStorage.getItem('arrayContactos');

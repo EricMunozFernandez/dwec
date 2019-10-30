@@ -4,14 +4,15 @@
     <meta charset="UTF-8">
     <title>Buscar contacto</title>
 </head>
-<body onload="rellenarOrganizacion()">
+<body>
 <main>
-<h1>Buscar contacto</h1>
-    <label>Nombre: <input type="text" name="nombre" ></label>
-    <br><br>
-    <label>Organizacion:</label>
-    <select name="organizacion">
-    </select>
+    <h1>Buscar contacto</h1>
+    <form id="formulario" method="get">
+        <div id="radios">
+            <label><input type="radio" name="metodo" value="nombre" onclick="metodoBuscar('nombre')">Nombre</label>
+            <label><input type="radio" name="metodo" value="organizacion" onclick="metodoBuscar('organizacion')">Organizacion</label>
+        </div>
+    </form>
 </main>
 <script src="ejercicio1buscar.js"></script>
 </body>

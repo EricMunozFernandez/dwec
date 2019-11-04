@@ -9,7 +9,7 @@ function metodoBuscar(tipo) {
         crearLabel(form, 'organizacion', 'select');
         rellenarOrganizacion();
         borrarRadio(form);
-        crearBoton(form, 'input', 'button');
+        crearBoton(form, 'input', 'button', 'fbuscar()');
     }
 }
 
@@ -37,10 +37,10 @@ function borrarRadio(form) {
     form.removeChild(radio);
 }
 
-function crearBoton(form, elemento, type) {
+function crearBoton(form, elemento, type, funcion) {
     let hijo = crearHijo('buscar', elemento, type);
     hijo.value = 'buscar';
-    hijo.setAttribute('onclick', 'fbuscar()');
+    hijo.setAttribute('onclick', funcion);
     form.appendChild(hijo);
 }
 
@@ -49,7 +49,7 @@ function rellenarOrganizacion() {
 
     let contactos = JSON.parse(arrayContactos);
     for (let x = 0; x < contactos.length; x++) {
-        crearOption(contactos[x].organinazion);
+        crearOption(contactos[x].organizacion);
     }
     quitarDuplicados();
 }
@@ -78,22 +78,39 @@ function quitarDuplicados() {
 }
 
 function fbuscar() {
-    let arrayContactos = localStorage.getItem('arrayContactos');
-    let busqueda;
-    if (document.getElementById('nombre') == null) {
+    let contactosJSON = localStorage.getItem('arrayContactos');
+    let arrayContactos = JSON.parse(contactosJSON);
+
+    let busqueda = document.getElementById('nombre');
+    if (busqueda == null) {
         busqueda = document.getElementById('organizacion').value
-        let x;
-        for(x=0;x<arrayContactos.length&&arrayContactos[x].nombre==busqueda;x++){}
-        if (x==arrayContactos.length){
-            alert('nombre no encontrado');
-        }
-        if(arrayContactos[x].nombre==busqueda){
-            alert('nombre encontrado');
-        }
+        let String = '';
+        let contador = 0;
+        for (let x = 0; x < arrayContactos.length; x++) {
 
-
+            if (busqueda == arrayContactos[x].organizacion) {
+                contador++;
+                String = String + contador + ' Su nombre es ' + arrayContactos[x].nombre
+                    + ' Su organizacion es ' + arrayContactos[x].organizacion
+                    + ' Otros ' + arrayContactos[x].otros + '<br>';
+            }
+        }
+        document.write(String);
     } else {
         busqueda = document.getElementById('nombre').value
+        let x;
+
+        for (x = 0; x < arrayContactos.length && arrayContactos[x].nombre != busqueda; x++) {
+        }
+        if (x == arrayContactos.length) {
+            alert('nombre no encontrado');
+        }
+        if (arrayContactos[x].nombre == busqueda) {
+            document.write('Su nombre es ' + arrayContactos[x].nombre
+                + ' Su organizacion es ' + arrayContactos[x].organizacion
+                + ' Otros ' + arrayContactos[x].otros);
+        }
+
     }
 
 }

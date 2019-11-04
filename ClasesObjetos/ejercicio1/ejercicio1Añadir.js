@@ -60,7 +60,7 @@ function enviarJSON(contactoJSON) {
 function añadirContacto(contactoJSON) {
     let contacto = JSON.parse(contactoJSON);
 
-    let arrayContactos = localStorage.getItem('arrayContactos');
+    let arrayContactos = localStorage.getItem('arrayContactosInicio');
 
     let contactos = JSON.parse(arrayContactos);
 

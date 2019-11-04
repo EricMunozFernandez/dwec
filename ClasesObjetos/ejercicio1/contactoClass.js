@@ -1,7 +1,7 @@
 class Contacto {
     constructor(nombre, organizacion,otros) {
         this.nombre = nombre;
-        this.organinazion = organizacion;
+        this.organizacion = organizacion;
         this.otros=[];
     }
 

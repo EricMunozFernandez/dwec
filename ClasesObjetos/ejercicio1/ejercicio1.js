@@ -5,6 +5,6 @@ let arrayContactos = [
     contacto4 = new Contacto('ana', 'mafia'),
     contacto5 = new Contacto('jaime', 'secretaria'),];
 
-localStorage.setItem('arrayContactos', JSON.stringify(arrayContactos));
+localStorage.setItem('arrayContactosInicio', JSON.stringify(arrayContactos));
 
 

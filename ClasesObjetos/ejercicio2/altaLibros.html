@@ -9,21 +9,21 @@
 <main>
     <form>
         <h1>ALTA DE LIBROS</h1>
-        <p><label>TITULO <input type="text"></label></p>
-        <p><label>ISBN <input type="text"></label></p>
+        <p><label>TITULO <input type="text" name="titulo"></label></p>
+        <p><label>ISBN <input type="text" name="isbn"></label></p>
         <p><label>TIPO </label>
             <select id="tipoLibro"></select></p>
         <h1>AUTOR</h1>
         <div id="autores">
-            <p><label>DNI <input type="text"></label></p>
-            <p><label>NOMBRE Y APELLIDOS <input type="text"></label></p>
+            <p><label>DNI <input type="text" name="dni"></label></p>
+            <p><label>NOMBRE Y APELLIDOS <input type="text" name="nombreApellido"></label></p>
         </div>
         <p><input type="button" id="añadirAutor" value="+ Autores"></p>
         <p><label>NUMERO DE EJEMPLARES <input type="number"></label></p>
         <p><label>DISPONIBLE: </label>
             <label>SI<input type="radio" name="disponible" id="si"></label>
             <label>NO<input type="radio" name="disponible" id="no"></label></p>
-        <p><label>FECHA A PARTIR DE LA CUAL ESTARA DISPONIBLE: <input type="date"></label></p>
+        <p><label>FECHA A PARTIR DE LA CUAL ESTARA DISPONIBLE: <input type="date" name="fechaPublicacion"></label></p>
         <p><input type="submit" id="enviar" value="Enviar"></p>
     </form>
 </main>

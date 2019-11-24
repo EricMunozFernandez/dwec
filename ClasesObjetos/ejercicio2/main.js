@@ -10,7 +10,7 @@ $(document).ready(
             })
         },
         error: function () {
-            console.log("no se ha podido obtener la nformacion");
+            console.log("no se ha podido obtener la informacion");
         }
     }),
     $('#añadirAutor').click(
@@ -25,6 +25,13 @@ $(document).ready(
             let isbnBool = validarIsbn();
             let dniBool = validarDni();
             let disponibleBool= validarDisponible();
+            if (campoVacio&&isbnBool&&dniBool&&disponibleBool) {
+              alert ('libro enviado');
+            }
+            else{
+              e.preventDefault();
+              alert('libro no enviado');
+            }
         }
     )
 )

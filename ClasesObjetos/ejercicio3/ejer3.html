@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="ejer3.js"></script>
+    <script src="jQuery_3.4.1_min.js"></script>
+    <script src="objPreguntas.js"></script>
+</head>
+<body>
+<h1>Indica que operacion quieres realizar</h1>
+    <input type="submit" value="Añadir pregunta" onclick="verPreguntas()">
+    <input type="submit" value="Generar examen" onclick="generarExamen()">
+    <div id="examen">
+
+    </div>
+<div id="preguntas" style="display: none">
+
+    <p>
+    <textarea id="pregunta" name="textarea"placeholder="Enunciado de la pregunta"></textarea>
+    </p>
+
+        <textarea id="a" name="textarea"placeholder="opcion A"></textarea>
+    <input type="radio" name="rad" value="1">Correcto<br>
+        <textarea id="b" name="textarea" placeholder="opcion B"></textarea>
+    <input type="radio" name="rad" value="2">Correcto<br>
+        <textarea id="c" name="textarea" placeholder="opcion C"></textarea>
+    <input type="radio" name="rad" value="3">Correcto<br>
+        <textarea id="d" name="textarea" placeholder="opcion D"></textarea>
+    <input type="radio" name="rad" value="4">Correcto<br>
+
+        <input type="submit" value="Enviar" onclick="enviar()">
+</div>
+<div id="botones" style="display: none">
+    <input type="submit" value="Siguiente" onclick="verPregunta()">
+    <input type="submit" value="Ver nota" onclick="nota()">
+
+</div>
+</body>
+</html>

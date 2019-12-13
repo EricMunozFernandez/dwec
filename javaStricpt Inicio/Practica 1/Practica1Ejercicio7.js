@@ -1,4 +1,4 @@
-/*Desarrolla un script que utilice cuatro variables (nombre, edad, incremento y nuevaEdad) para mostrar la edad que una persona tendra´
+/*Desarrolla un js que utilice cuatro variables (nombre, edad, incremento y nuevaEdad) para mostrar la edad que una persona tendra´
 dentro de unos anos.*/
 
 let nombre= "Juan"

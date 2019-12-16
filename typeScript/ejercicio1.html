@@ -19,14 +19,16 @@
             <p><label>NOMBRE Y APELLIDOS <input type="text" name="nombreApellido"></label></p>
         </div>
         <p><input type="button" id="añadirAutor" value="+ Autores"></p>
-        <p><label>NUMERO DE EJEMPLARES <input type="number"></label></p>
+        <p><label>NUMERO DE EJEMPLARES <input type="number" name="ejemplares"></label></p>
         <p><label>DISPONIBLE: </label>
-            <label>SI<input type="radio" name="disponible" id="si"></label>
-            <label>NO<input type="radio" name="disponible" id="no"></label></p>
-        <p><label>FECHA A PARTIR DE LA CUAL ESTARA DISPONIBLE: <input type="date" name="fechaPublicacion"></label></p>
-        <p><input type="submit" id="enviar" value="Enviar"></p>
+            <label>SI<input type="radio" name="disponible" id="si" value="si"></label>
+            <label>NO<input type="radio" name="disponible" id="no" value="no"></label></p>
+        <p style="display: none" id="fecha"><label>FECHA A PARTIR DE LA CUAL ESTARA DISPONIBLE: <input type="date" name="fechaPublicacion"></label></p>
+        <p><input type="button" id="enviar" value="Enviar"></p>
     </form>
 </main>
+<script src="js/Autor.js"></script>
+<script src="js/Libro.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>

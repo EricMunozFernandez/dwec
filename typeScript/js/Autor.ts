@@ -1,26 +1,10 @@
+class Autor {
+    private dni: string | number | string[];
+    private nombreApellidos: string | number | string[];
 
-class Autor{
-    private _dni:string;
-    private _nombreApellidos:string;
-
-    constructor(dni: string, nombreApellidos: string) {
-        this._dni = dni;
-        this._nombreApellidos = nombreApellidos;
+    constructor(dni: string | number | string[], nombreApellidos: string | number | string[]) {
+        this.dni = dni;
+        this.nombreApellidos = nombreApellidos;
     }
 
-    get dni(): string {
-        return this._dni;
-    }
-
-    set dni(value: string) {
-        this._dni = value;
-    }
-
-    get nombreApellidos(): string {
-        return this._nombreApellidos;
-    }
-
-    set nombreApellidos(value: string) {
-        this._nombreApellidos = value;
-    }
 }

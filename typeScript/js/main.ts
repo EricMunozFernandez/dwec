@@ -1,9 +1,11 @@
-$(document).ready(function() {
-    let cAutores:number=1;
+///<reference path="Autor.ts"/>
+///<reference path="Libro.ts"/>
+$(document).ready(function () {
+    let cAutores: number = 1;
     $.ajax({
         url: "tiposLibros.json",
         success: function (respuesta) {
-            $.each(respuesta.datos, function (index:number, elemento) {
+            $.each(respuesta.datos, function (index: number, elemento) {
                 $("#tipoLibro").append(
                     '<option>' + elemento.tipo + '</option>'
                 );
@@ -13,44 +15,44 @@ $(document).ready(function() {
             console.log("no se ha podido obtener la informacion");
         }
     }),
-    $('#añadirAutor').click(
-        function () {
-            $('#autores').append('<p><label>DNI <input type="text" name="dni'+cAutores+'"></label></p>' +
-                '<p><label>NOMBRE Y APELLIDOS <input type="text" name="nombreApellido'+cAutores+'"></label></p>');
-            cAutores++;
-        }
-    ),
-    $('input[name=disponible]').click(function () {
-        if ($('input[name=disponible]:checked').val()=='si'){
-            $('#fecha').css('display','block');
-        }
-        else{
-            $('#fecha').css('display','none');
-        }
-    });
-    function campoVacio(campo){
-        try{
-            if($("input[name="+campo+"]").val()==''){
-            throw 'campo vacio';
+        $('#añadirAutor').click(
+            function () {
+                $('#autores').append('<p><label>DNI <input type="text" name="dni' + cAutores + '"></label></p>' +
+                    '<p><label>NOMBRE Y APELLIDOS <input type="text" name="nombreApellido' + cAutores + '"></label></p>');
+                cAutores++;
             }
-        }
-        catch (e) {
+        ),
+        $('input[name=disponible]').click(function () {
+            if ($('input[name=disponible]:checked').val() == 'si') {
+                $('#fecha').css('display', 'block');
+            } else {
+                $('#fecha').css('display', 'none');
+            }
+        });
+
+    function campoVacio(campo) {
+        try {
+            if ($("input[name=" + campo + "]").val() == '') {
+                throw 'campo vacio';
+            }
+        } catch (e) {
             alert(e);
         }
     }
-    function validarDNI(){
-        try{
+
+    function validarDNI() {
+        try {
             let reg;
             reg = /^(\d{8})([A-Z])$/;
             if (!reg.test($('[name=dni]').val())) {
                 throw 'dni incorrecto';
             }
-        }
-        catch (e) {
+        } catch (e) {
             alert(e);
         }
     }
-    function validarISBN(){
+
+    function validarISBN() {
         try {
             let reg;
             reg = /^ISBN\s(?=[-0-9xX ]{13}$)(?:[0-9]+[- ]){3}[0-9]*[xX0-9]$/;
@@ -58,65 +60,104 @@ $(document).ready(function() {
             if (!reg.test($('[name=isbn]').val())) {
                 throw 'ISBN incorrecto';
             }
-        }
-        catch (e) {
+        } catch (e) {
             alert(e);
         }
-        }
-    function validarTexto(campo){
-        try{
+    }
+
+    function validarTexto(campo) {
+        try {
             let reg;
-            reg=/^[a-zA-Z ]*$/;
-            if(!reg.test($('[name='+campo+']').val())){
+            reg = /^[a-zA-Z ]*$/;
+            if (!reg.test($('[name=' + campo + ']').val())) {
                 throw 'campo texto incorrecto';
             }
-        }
-        catch (e) {
+        } catch (e) {
             alert(e);
         }
     }
-    function validarNumero(campo){
-        try{
+
+    function validarNumero(campo) {
+        try {
             let reg;
-            reg=/^[0-9]*$/;
-            if(!reg.test($('[name='+campo+']').val())){
+            reg = /^[0-9]*$/;
+            if (!reg.test($('[name=' + campo + ']').val())) {
                 throw 'campo numerico incorrecto';
             }
-        }
-        catch (e) {
+        } catch (e) {
             alert(e);
         }
     }
-    function validarFecha(campo){
-        try{
-            let fecha= $('[name='+campo+']').val();
+
+    function validarFecha(campo) {
+        try {
+            let fecha = $('[name=' + campo + ']').val();
             // @ts-ignore
-            let fechaDate= new Date(fecha);
-            let hoy= new Date();
-            if(hoy>=fechaDate){
+            let fechaDate = new Date(fecha);
+            let hoy = new Date();
+            if (hoy >= fechaDate) {
                 throw 'fecha solo a partir de hoy';
             }
-        }
-        catch (e) {
+        } catch (e) {
             alert(e);
         }
     }
-    function enviarJSON(){
-        let titulo= $('[name=titulo]').val();
-        let isbn= $('[name=isbn]').val();
-        let arrayAutores=new Array();
 
-        let dni= $('[name=dni]').val();
-        let nombreApellido= $('[name=nombreApellido]').val();
-        let autor=new Autor(dni,nombreApellido);
+    function enviarJSON() {
+        let titulo = $('[name=titulo]').val();
+        let isbn = $('[name=isbn]').val();
+        let tipo= $('[name=tipo]').change(function () {
+            return tipo =$('input[name=tipo]').val();
+        });
+        let numEjemplares = $('[name=ejemplares]').val();
+        let disponibilidad: boolean;
+        let fechaDate: Date;
+        if ($('input[name=disponible]:checked').val() == 'si') {
+            disponibilidad = true;
+            let fechaDisponibleString = $('[name=fechaPublicacion]').val();
+            // @ts-ignore
+            fechaDate = new Date(fechaDisponibleString);
+        } else {
+            disponibilidad = false;
+            fechaDate = null;
+        }
+
+        let arrayAutores = new Array();
+        let dni = $('[name=dni]').val();
+        let nombreApellido = $('[name=nombreApellido]').val();
+        let autor = new Autor(dni, nombreApellido);
         arrayAutores.push(autor);
-        for (let x:number=1;x<cAutores;x++){
-            let dni= $('[name=dni'+x+']').val();
-            let nombreApellido= $('[name=nombreApellido'+x+']').val();
-            let autor=new Autor(dni,nombreApellido);
+        for (let x: number = 1; x < cAutores; x++) {
+            let dni = $('[name=dni' + x + ']').val();
+            let nombreApellido = $('[name=nombreApellido' + x + ']').val();
+            let autor = new Autor(dni, nombreApellido);
             arrayAutores.push(autor);
         }
+        console.log(arrayAutores);
+        let libro = new Libro(titulo, isbn, tipo, numEjemplares, arrayAutores, disponibilidad, fechaDate)
+        console.log(libro);
+        let libroJSON = JSON.stringify(libro);
+        envioAjax(libroJSON);
     }
+
+    function envioAjax(archivo) {
+        $.ajax({
+            data: archivo,
+            url: '#',
+            type: 'post',
+            dataType: 'json',
+            contentType: 'application/json',
+            success: function () {
+                console.log(archivo);
+                alert('envio correcto');
+            },
+            error:function () {
+                console.log('error');
+            }
+
+        });
+    }
+
     $('#enviar').click(function () {
         campoVacio('titulo');
         campoVacio('isbn');
@@ -125,18 +166,19 @@ $(document).ready(function() {
         validarDNI();
         campoVacio('nombreApellido');
         validarTexto('nombreApellido');
-        for (let x:number=1;x<cAutores;x++){
-            campoVacio('dni'+x+'');
-            validarTexto('dni'+x+'');
-            campoVacio('nombreApellido'+x+'');
-            validarTexto('nombreApellido'+x+'');
+        for (let x: number = 1; x < cAutores; x++) {
+            campoVacio('dni' + x + '');
+            validarTexto('dni' + x + '');
+            campoVacio('nombreApellido' + x + '');
+            validarTexto('nombreApellido' + x + '');
         }
         campoVacio('ejemplares');
         validarNumero('ejemplares');
-        if ($('input[name=disponible]:checked').val()=='si'){
+        if ($('input[name=disponible]:checked').val() == 'si') {
             campoVacio('fechaPublicacion');
             validarFecha('fechaPublicacion');
         }
         enviarJSON();
     })
+
 });

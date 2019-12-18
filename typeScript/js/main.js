@@ -1,3 +1,5 @@
+///<reference path="Autor.ts"/>
+///<reference path="Libro.ts"/>
 $(document).ready(function () {
     var cAutores = 1;
     $.ajax({
@@ -89,10 +91,6 @@ $(document).ready(function () {
             // @ts-ignore
             var fechaDate = new Date(fecha);
             var hoy = new Date();
-            console.log(typeof fechaDate);
-            console.log(typeof hoy);
-            console.log(fechaDate);
-            console.log(hoy);
             if (hoy >= fechaDate) {
                 throw 'fecha solo a partir de hoy';
             }
@@ -100,6 +98,58 @@ $(document).ready(function () {
         catch (e) {
             alert(e);
         }
+    }
+    function enviarJSON() {
+        var titulo = $('[name=titulo]').val();
+        var isbn = $('[name=isbn]').val();
+        var tipo = $('[name=tipo]').change(function () {
+            return tipo = $('input[name=tipo]').val();
+        });
+        var numEjemplares = $('[name=ejemplares]').val();
+        var disponibilidad;
+        var fechaDate;
+        if ($('input[name=disponible]:checked').val() == 'si') {
+            disponibilidad = true;
+            var fechaDisponibleString = $('[name=fechaPublicacion]').val();
+            // @ts-ignore
+            fechaDate = new Date(fechaDisponibleString);
+        }
+        else {
+            disponibilidad = false;
+            fechaDate = null;
+        }
+        var arrayAutores = new Array();
+        var dni = $('[name=dni]').val();
+        var nombreApellido = $('[name=nombreApellido]').val();
+        var autor = new Autor(dni, nombreApellido);
+        arrayAutores.push(autor);
+        for (var x = 1; x < cAutores; x++) {
+            var dni_1 = $('[name=dni' + x + ']').val();
+            var nombreApellido_1 = $('[name=nombreApellido' + x + ']').val();
+            var autor_1 = new Autor(dni_1, nombreApellido_1);
+            arrayAutores.push(autor_1);
+        }
+        console.log(arrayAutores);
+        var libro = new Libro(titulo, isbn, tipo, numEjemplares, arrayAutores, disponibilidad, fechaDate);
+        console.log(libro);
+        var libroJSON = JSON.stringify(libro);
+        envioAjax(libroJSON);
+    }
+    function envioAjax(archivo) {
+        $.ajax({
+            data: archivo,
+            url: '#',
+            type: 'post',
+            dataType: 'json',
+            contentType: 'application/json',
+            success: function () {
+                console.log(archivo);
+                alert('envio correcto');
+            },
+            error: function () {
+                console.log('error');
+            }
+        });
     }
     $('#enviar').click(function () {
         campoVacio('titulo');
@@ -121,5 +171,6 @@ $(document).ready(function () {
             campoVacio('fechaPublicacion');
             validarFecha('fechaPublicacion');
         }
+        enviarJSON();
     });
 });

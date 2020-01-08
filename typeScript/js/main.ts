@@ -35,8 +35,10 @@ $(document).ready(function () {
             if ($("input[name=" + campo + "]").val() == '') {
                 throw 'campo vacio';
             }
+            return true;
         } catch (e) {
             alert(e);
+            return false;
         }
     }
 
@@ -47,8 +49,10 @@ $(document).ready(function () {
             if (!reg.test($('[name=dni]').val())) {
                 throw 'dni incorrecto';
             }
+            return true;
         } catch (e) {
             alert(e);
+            return false;
         }
     }
 
@@ -60,8 +64,10 @@ $(document).ready(function () {
             if (!reg.test($('[name=isbn]').val())) {
                 throw 'ISBN incorrecto';
             }
+            return true;
         } catch (e) {
             alert(e);
+            return false;
         }
     }
 
@@ -72,8 +78,10 @@ $(document).ready(function () {
             if (!reg.test($('[name=' + campo + ']').val())) {
                 throw 'campo texto incorrecto';
             }
+            return true;
         } catch (e) {
             alert(e);
+            return false;
         }
     }
 
@@ -84,8 +92,10 @@ $(document).ready(function () {
             if (!reg.test($('[name=' + campo + ']').val())) {
                 throw 'campo numerico incorrecto';
             }
+            return true;
         } catch (e) {
             alert(e);
+            return false;
         }
     }
 
@@ -98,17 +108,17 @@ $(document).ready(function () {
             if (hoy >= fechaDate) {
                 throw 'fecha solo a partir de hoy';
             }
+            return true;
         } catch (e) {
             alert(e);
+            return false;
         }
     }
 
     function enviarJSON() {
         let titulo = $('[name=titulo]').val();
         let isbn = $('[name=isbn]').val();
-        let tipo= $('[name=tipo]').change(function () {
-            return tipo =$('input[name=tipo]').val();
-        });
+        let tipo = ($("[name=tipo] option:selected").text());
         let numEjemplares = $('[name=ejemplares]').val();
         let disponibilidad: boolean;
         let fechaDate: Date;
@@ -133,9 +143,7 @@ $(document).ready(function () {
             let autor = new Autor(dni, nombreApellido);
             arrayAutores.push(autor);
         }
-        console.log(arrayAutores);
         let libro = new Libro(titulo, isbn, tipo, numEjemplares, arrayAutores, disponibilidad, fechaDate)
-        console.log(libro);
         let libroJSON = JSON.stringify(libro);
         envioAjax(libroJSON);
     }
@@ -151,7 +159,8 @@ $(document).ready(function () {
                 console.log(archivo);
                 alert('envio correcto');
             },
-            error:function () {
+            error: function () {
+                console.log(archivo);
                 console.log('error');
             }
 
@@ -159,26 +168,42 @@ $(document).ready(function () {
     }
 
     $('#enviar').click(function () {
-        campoVacio('titulo');
-        campoVacio('isbn');
-        validarISBN();
-        campoVacio('dni');
-        validarDNI();
-        campoVacio('nombreApellido');
-        validarTexto('nombreApellido');
+        let tituloVacio: boolean = campoVacio('titulo');
+        let isbnVacio: boolean = campoVacio('isbn');
+        let isbnValido: boolean = validarISBN();
+        let dniVacio: boolean = campoVacio('dni');
+        let dniValido: boolean = validarDNI();
+        let nombreApellidoVacio: boolean = campoVacio('nombreApellido');
+        let nombreApellidoValido: boolean = validarTexto('nombreApellido');
+        let arrayAutores = [];
         for (let x: number = 1; x < cAutores; x++) {
-            campoVacio('dni' + x + '');
-            validarTexto('dni' + x + '');
-            campoVacio('nombreApellido' + x + '');
-            validarTexto('nombreApellido' + x + '');
+            let dniAutorVacio = campoVacio('dni' + x + '');
+            arrayAutores.push(dniAutorVacio);
+            let dniAutorValido = validarDNI();
+            arrayAutores.push(dniAutorValido);
+            let nomAutorVacio = campoVacio('nombreApellido' + x + '');
+            arrayAutores.push(nomAutorVacio);
+            let nomAutorValido = validarTexto('nombreApellido' + x + '');
+            arrayAutores.push(nomAutorValido);
         }
-        campoVacio('ejemplares');
-        validarNumero('ejemplares');
+
+        let ejemplaresVacio: boolean = campoVacio('ejemplares');
+        let ejemplaresValido: boolean = validarNumero('ejemplares');
+        let fechaPublicacionVacio: boolean = true;
+        let fechaPublicacionValido: boolean = true;
         if ($('input[name=disponible]:checked').val() == 'si') {
-            campoVacio('fechaPublicacion');
-            validarFecha('fechaPublicacion');
+            fechaPublicacionVacio = campoVacio('fechaPublicacion');
+            fechaPublicacionValido = validarFecha('fechaPublicacion');
         }
-        enviarJSON();
+        if (arrayAutores.indexOf(false) !== -1) {
+
+        } else {
+            if (tituloVacio && isbnVacio && isbnValido && dniVacio && dniValido && nombreApellidoVacio && nombreApellidoValido && ejemplaresVacio && ejemplaresValido && fechaPublicacionVacio && fechaPublicacionValido) {
+                enviarJSON();
+            } else {
+                alert('rellene todo correctamente');
+            }
+        }
     })
 
 });
